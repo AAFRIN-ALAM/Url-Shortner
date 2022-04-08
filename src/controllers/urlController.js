@@ -30,10 +30,10 @@ const createUrl = async function (req, res) {
         if (!longUrl) { return res.status(400).send({ status: false, msg: "please provide a longUrl" }) }
 
         // VALIDATING LONG-URL:
-        if (!/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-])?\??(?:[\-\+=&;%@\.\w])#?(?:[\.\!\/\\\w]*))?)/.test(longUrl.trim())) { return res.status(400).send({ status: false, msg: "longUrl is invalid" }) }
+        if (!/^https?:\/\/([\w\d\-]+\.)+\w{2,}(\/.+)?$/.test(longUrl.trim())) { return res.status(400).send({ status: false, msg: "longUrl is invalid" }) }
 
         let longUrlAlredyUesd = await GET_ASYNC(`${longUrl}`)
-        if (longUrlAlredyUesd) { return res.status(200).send({ status: true, data:JSON.parse(longUrlAlredyUesd)}) }
+        if (longUrlAlredyUesd) { return res.status(200).send({ status: true,msg:"data that ur", data:JSON.parse(longUrlAlredyUesd)}) }
 
         let longurl= await urlModel.findOne({ longUrl: longUrl })
         if(longurl) {
@@ -88,8 +88,13 @@ const getUrlcode = async function (req, res) {
     try {
         let urlCode = req.params.urlCode
 
-        if (!urlCode) {
-            return res.status(400).send({ status: false, msg: "urlCode is required" })
+        // const urlCode = req.params.urlCode
+        if (urlCode.trim().length == 0) {
+            return res.status(400).send({ status: false, msg: "params value is not present" })
+        }
+
+        if ((urlCode.length != 9)) { 
+            return res.status(400).send({ status: false, message: "Invalid Url" }) 
         }
         let urlDetails = await GET_ASYNC(`${urlCode}`)
         if (urlDetails) {
