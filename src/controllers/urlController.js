@@ -61,28 +61,7 @@ const createUrl = async function (req, res) {
     }
 };
 
-// ### GET /:urlCode:
-
-// const getUrlcode = async function (req, res) {
-//     try {
-//         let urlCode = req.params.urlCode;
-//         let cahcedProfileData = await GET_ASYNC(`${urlCode}`);
-//         if (cahcedProfileData) {
-//             let datatype = JSON.parse(cahcedProfileData);
-//             return res.status(302).redirect(datatype.longUrl);
-//         } else {
-//             const profile = await urlModel.findOne({ urlCode: urlCode });
-//             if (profile) {
-//                 await SET_ASYNC(`${urlCode}`, JSON.stringify(profile));
-//                 return res.status(302).redirect(profile.longUrl);
-//             }
-//         }
-//     }
-//     catch (err) {
-//         return res.status(500).send({ status: false, message: err.message });
-//     }
-// };
-
+====================================================== getUrlCode ===================================================================
 
 const getUrlcode = async function (req, res) {
     try {
