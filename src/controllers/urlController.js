@@ -3,6 +3,9 @@ const shortId = require("shortid");
 const redis = require('redis')
 const { promisify } = require("util");
 
+
+// ====================================================== redis ===================================================================
+
 const redisClient = redis.createClient(
     19837,
     "redis-19837.c212.ap-south-1-1.ec2.cloud.redislabs.com",
@@ -20,7 +23,8 @@ const GET_ASYNC = promisify(redisClient.GET).bind(redisClient);
 const SET_ASYNC = promisify(redisClient.SET).bind(redisClient);
 
 
-// ### POST /url/shorten:
+// ====================================================== createUrl ===================================================================
+
 const createUrl = async function (req, res) {
     try {
         const baseUrl = "http://localhost:3000/";
@@ -61,7 +65,7 @@ const createUrl = async function (req, res) {
     }
 };
 
-====================================================== getUrlCode ===================================================================
+// ====================================================== getUrlCode ===================================================================
 
 const getUrlcode = async function (req, res) {
     try {
